@@ -1,0 +1,226 @@
+<Page1>:
+    nombre_personnages: nombre_personnages
+    label_input: label_input
+    canvas.before:
+        Rectangle:
+            source: "images/background_accueil.webp"
+            pos: self.pos
+            size: self.size
+    GridLayout:
+        cols: 1
+        padding: 20, 380, 20, 20
+        spacing: 10
+        Label:
+            id: label_input
+            padding: 10
+            text: "Choisissez le nombre de personnages"
+            font_size: 20
+            text_size: self.width, None
+            size_hint_y: None
+            height: self.texture_size[1]
+            color: 249/255, 186/255, 28/255, 1
+            halign: 'center'
+            valign: 'center'
+            canvas.before:
+                Color:
+                    rgba: 4/255, 67/255, 106/255, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            canvas.after:
+                Color:
+                    rgba: 249/255, 186/255, 28/255, 1
+                Line:
+                    rectangle: (*self.pos, *self.size)
+                    width: 1.5
+
+        NombrePersonnagesInput:
+            id: nombre_personnages
+            padding: 5, 15, 5, 5
+            multiline: False
+            # 1 = 100% en largeur, 0.5 = 50% en hauteur
+            size_hint: 0.8, None
+            height: 50
+            font_size: 20
+            halign: 'center'
+            valign: 'center'
+            focus: True
+            on_text_validate: root.on_enter(self)
+        YellowButton:
+            text: "Valider"
+            size_hint: 0.8, None
+            height: 50
+            on_press: root.goPage2(self)
+
+<Page2>
+    label1: label1
+    label3: label3
+    timer: timer
+    button_start: button_start
+    button_passer: button_valider
+    button_valider: button_valider
+    button_pause: button_pause
+    
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 20
+        canvas.before:
+            Rectangle:
+                source: "images/background.webp"
+                pos: self.pos
+                size: self.size
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 10
+            size_hint: 1, None
+            height: 40
+            YellowButton:
+                text: "Nouvelle partie"
+                font_size: 15
+                size_hint: 0.5, 1
+                on_press: root.goPage1(self)
+            Label:
+                id: label3
+                font_size: 30
+                size_hint: 0.5, 1
+        BoxLayout:
+            padding: 10
+            size_hint: 1, None
+            height: 40
+            Widget:
+                size_hint: 0.1, None
+                height: 30
+            YellowButton:
+                id: button_start
+                text: "Démarrer la manche"
+                font_size: 20
+                size_hint: 1, None
+                height: 30
+                on_press: root.choisirPersonnage()
+            Widget:
+                size_hint: 0.1, None
+                height: 30
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 10
+            padding: 10
+            size_hint: 1, None
+            height: 40
+            LabelFontBlue:
+                id: timer
+                font_size: 15
+                padding: 5
+                bold: True
+                size_hint: 0.7, None
+                height: 35
+            YellowButton:
+                id: button_pause
+                text: "Pause"
+                size_hint: 0.3, None
+                height: 35
+                on_press: root.pause_timer()
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 10
+            spacing: 20
+            Widget:
+                size_hint_y: 0.6
+            LabelFontBlue:
+                id: label1
+                font_size: 20
+                padding: 5
+                valigne: 'center'
+                halign: 'center'
+                size_hint: 1, 0.2
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: 20
+                spacing: 20
+                size_hint: 1, 0.2
+                RedButton:
+                    id: button_passer
+                    text: "Passer"
+                    font_size: 20
+                    size_hint: 1, None
+                    height: 30
+                    opacity: 0
+                    disabled: True
+                    on_press: root.passer()
+                GreenButton:
+                    id: button_valider
+                    text: "Valider"
+                    font_size: 20
+                    size_hint: 1, None
+                    height: 30
+                    opacity: 0
+                    disabled: True
+                    on_press: root.valider()
+
+
+<YellowButton@Button>:
+    bold: True
+    background_normal: ''
+    background_color: "#f9ba1c"
+    color: 4/255, 67/255, 106/255, 1
+
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 0.5  # couleur de l'ombre
+        Rectangle:
+            pos: self.x + 5, self.y - 5  # décale légèrement pour faire ombre
+            size: self.size
+
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<RedButton@Button>:
+    bold: True
+    background_normal: ''
+    background_color: "#ad3232"
+    color: 1, 1, 1, 1
+
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 0.5  # couleur de l'ombre
+        Rectangle:
+            pos: self.x + 5, self.y - 5  # décale légèrement pour faire ombre
+            size: self.size
+
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<GreenButton@Button>:
+    bold: True
+    background_normal: ''
+    background_color: "#27AE60"
+    color: 1, 1, 1, 1
+
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 0.5  # couleur de l'ombre
+        Rectangle:
+            pos: self.x + 5, self.y - 5  # décale légèrement pour faire ombre
+            size: self.size
+
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+<LabelFontBlue@Label>:
+    canvas.before:
+        Color:
+            rgba: 4/255, 67/255, 106/255, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    
